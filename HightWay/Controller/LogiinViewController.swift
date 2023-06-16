@@ -41,7 +41,6 @@ class LogiinViewController: UIViewController {
         field.layer.borderColor = CGColor(red: 235/256, green: 175/256, blue: 61/256, alpha: 1)
         field.translatesAutoresizingMaskIntoConstraints = false
         field.tintColor = .specialOrange
-        
         return field
     }()
     
@@ -66,6 +65,7 @@ class LogiinViewController: UIViewController {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "eye"), for: .normal)
         btn.addTarget(self, action: #selector(eyeButtonTaped), for: .touchUpInside)
+        btn.tintColor = .specialOrange
         return btn
     }()
     
@@ -141,9 +141,11 @@ class LogiinViewController: UIViewController {
     @objc func eyeButtonTaped() {
         passwordHidden = !passwordHidden
         if passwordHidden {
+            fieldEyeButton.setImage(UIImage(systemName: "eye"), for: .normal)
             passwordField.isSecureTextEntry = true
         } else {
             passwordField.isSecureTextEntry = false
+            fieldEyeButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
         }
     }
     
@@ -186,6 +188,9 @@ class LogiinViewController: UIViewController {
         emailField.delegate = self
         passwordField.delegate = self
         passwordField.rightView = fieldEyeButton
+        passwordField.clearButtonMode = .never
+        passwordField.rightViewMode = .always
+        passwordField.rightView?.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     private func configureButtonsMethods() {
@@ -220,5 +225,5 @@ class LogiinViewController: UIViewController {
 // MARK: - TextField Delegate
 
 extension LogiinViewController: UITextFieldDelegate {
-    
+
 }
