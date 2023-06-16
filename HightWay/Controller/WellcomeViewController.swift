@@ -63,7 +63,7 @@ class WellcomeViewController: UIViewController {
     }
     
     @objc func createAccButtonTaped() {
-        
+        self.navigationController?.pushViewController(CreateAccountViewController(), animated: true)
     }
     
     // MARK: - Configure UI

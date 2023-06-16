@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57992B1A2A3CBC8600DEAA68 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57992B192A3CBC8600DEAA68 /* CreateAccountViewController.swift */; };
 		5799722B2A3911940073EF28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5799722A2A3911940073EF28 /* AppDelegate.swift */; };
 		5799722D2A3911940073EF28 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5799722C2A3911940073EF28 /* SceneDelegate.swift */; };
 		5799722F2A3911940073EF28 /* WellcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5799722E2A3911940073EF28 /* WellcomeViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		57992B192A3CBC8600DEAA68 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		579972272A3911940073EF28 /* HightWay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HightWay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5799722A2A3911940073EF28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5799722C2A3911940073EF28 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				5799722E2A3911940073EF28 /* WellcomeViewController.swift */,
 				57B65D622A3BA5360079A0A8 /* LogiinViewController.swift */,
+				57992B192A3CBC8600DEAA68 /* CreateAccountViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57992B1A2A3CBC8600DEAA68 /* CreateAccountViewController.swift in Sources */,
 				57B65D672A3BAF7A0079A0A8 /* SocialButtons.swift in Sources */,
 				5799722F2A3911940073EF28 /* WellcomeViewController.swift in Sources */,
 				57B65D692A3BDD4F0079A0A8 /* UITextField+ Extension.swift in Sources */,

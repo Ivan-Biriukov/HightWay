@@ -51,7 +51,9 @@ final class ActionsButtons: UIButton {
         case .mainBlack:
             setTitleColor(.white, for: .normal)
             backgroundColor = .black
-        default: print("error")
+        default:
+            titleLabel?.font = .specialSemiBold16()
+            setTitleColor(.specialOrange, for: .normal)
         }
     }
     

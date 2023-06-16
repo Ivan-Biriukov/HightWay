@@ -1,12 +1,10 @@
-
-
 import UIKit
 
-class LogiinViewController: UIViewController {
+class CreateAccountViewController: UIViewController {
     
     private var passwordHidden: Bool = true
     
-    // MARK: - UI Elements
+    // MARK: - UI Elemetns
     
     private let backgroundImage : UIImageView = {
         let img = UIImageView()
@@ -16,15 +14,34 @@ class LogiinViewController: UIViewController {
         img.translatesAutoresizingMaskIntoConstraints = false
         return img
     }()
-    
-    private let loginLabel : UILabel = {
+
+    private let mainLabel : UILabel = {
         let lb = UILabel()
-        lb.text = "Login"
+        lb.text = "Create Account"
         lb.font = UIFont.specialSemiBold30()
         lb.textColor = .specialOrange
         lb.textAlignment = .left
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
+    }()
+    
+    private let userNameField : UITextField = {
+        let field = UITextField()
+        field.attributedPlaceholder = NSAttributedString(
+            string: "User Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.specialOrange]
+        )
+        field.textColor = .specialOrange
+        field.font = .specialSemiBold16()
+        field.keyboardType = .default
+        field.returnKeyType = .done
+        field.layer.borderWidth = 2
+        field.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        field.layer.cornerRadius = 30
+        field.layer.borderColor = CGColor(red: 235/256, green: 175/256, blue: 61/256, alpha: 1)
+        field.translatesAutoresizingMaskIntoConstraints = false
+        field.tintColor = .specialOrange
+        return field
     }()
     
     private let emailField : UITextField = {
@@ -35,9 +52,9 @@ class LogiinViewController: UIViewController {
         )
         field.textColor = .specialOrange
         field.font = .specialSemiBold16()
+        field.layer.borderWidth = 2
         field.keyboardType = .emailAddress
         field.returnKeyType = .done
-        field.layer.borderWidth = 2
         field.heightAnchor.constraint(equalToConstant: 60).isActive = true
         field.layer.cornerRadius = 30
         field.layer.borderColor = CGColor(red: 235/256, green: 175/256, blue: 61/256, alpha: 1)
@@ -54,9 +71,8 @@ class LogiinViewController: UIViewController {
         )
         field.textColor = .specialOrange
         field.font = .specialSemiBold16()
-        field.keyboardType = .default
-        field.returnKeyType = .done
         field.isSecureTextEntry = true
+        field.returnKeyType = .done
         field.layer.borderWidth = 2
         field.layer.cornerRadius = 30
         field.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -73,19 +89,7 @@ class LogiinViewController: UIViewController {
         return btn
     }()
     
-    private let fieldsStack : UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 30
-        stack.distribution = .fill
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    private lazy var loginButton = ActionsButtons(withStyle: .onboardingFilled, withText: "Login")
-    private lazy var forgotPasswordButton = ActionsButtons(withStyle: .forgotPassword, withText: "Forgot Password")
-    
-    private let buttonsStack : UIStackView = {
+    private let fieldsStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fill
@@ -93,6 +97,8 @@ class LogiinViewController: UIViewController {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
+    
+    private lazy var singUpButton = ActionsButtons(withStyle: .onboardingFilled, withText: "Sing Up")
     
     private lazy var facebookButton = SocialButtons(withStyle: .facebook)
     private lazy var googleButton = SocialButtons(withStyle: .google)
@@ -100,7 +106,8 @@ class LogiinViewController: UIViewController {
     private let socialButtonsStack : UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .fill
+        stack.distribution = .fillEqually
+        stack.contentMode = .center
         stack.spacing = 42
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -108,37 +115,43 @@ class LogiinViewController: UIViewController {
     
     private let bottomLabel : UILabel = {
         let lb = UILabel()
-        lb.text = "Don’t have an account?"
+        lb.text = "Already got an account?"
         lb.font = .specialSemiBold16()
         lb.textColor = .white
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private lazy var singUpButton = ActionsButtons(withStyle: .singUp, withText: "Sing Up")
+    private lazy var singInButton = ActionsButtons(withStyle: .singUp, withText: "Sing In")
     
     private let bottomStack : UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .fill
+        stack.distribution = .equalSpacing
         stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
+    private let mainBottomStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.contentMode = .center
+        stack.spacing = 50
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
     
-    // MARK: - Life Cycle Methods
+    // MARK: - LifeCycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
-        configureTextFields()
-        configureButtonsMethods()
         setupConstraints()
-        emailField.setLeftPaddingPoints(43.5)
-        passwordField.setLeftPaddingPoints(43.5)
+        configureTextFields()
+        configureButtons()
     }
-
     
     // MARK: - Buttons Methods
     
@@ -153,11 +166,11 @@ class LogiinViewController: UIViewController {
         }
     }
     
-    @objc func loginButtonTaped() {
-        
+    @objc func singInButtonTaped() {
+        self.navigationController?.pushViewController(LogiinViewController(), animated: true)
     }
     
-    @objc func forgotPasswordButtonTaped() {
+    @objc func singUpButtonTaped() {
         
     }
     
@@ -169,71 +182,70 @@ class LogiinViewController: UIViewController {
         
     }
     
-    @objc func singUpButtonTaped() {
-        self.navigationController?.pushViewController(CreateAccountViewController(), animated: true)
-    }
-    
     // MARK: - Configure Methods
     
     private func addSubviews() {
         view.addSubview(backgroundImage)
-        view.addSubview(loginLabel)
+        view.addSubview(mainLabel)
         view.addSubview(fieldsStack)
+        fieldsStack.addArrangedSubview(userNameField)
         fieldsStack.addArrangedSubview(emailField)
         fieldsStack.addArrangedSubview(passwordField)
-        view.addSubview(buttonsStack)
-        buttonsStack.addArrangedSubview(loginButton)
-        buttonsStack.addArrangedSubview(forgotPasswordButton)
+        view.addSubview(singUpButton)
         view.addSubview(socialButtonsStack)
         socialButtonsStack.addArrangedSubview(facebookButton)
         socialButtonsStack.addArrangedSubview(googleButton)
         view.addSubview(bottomStack)
         bottomStack.addArrangedSubview(bottomLabel)
-        bottomStack.addArrangedSubview(singUpButton)
+        bottomStack.addArrangedSubview(singInButton)
     }
     
     private func configureTextFields() {
+        userNameField.delegate = self
+        userNameField.setLeftPaddingPoints(43)
         emailField.delegate = self
+        emailField.setLeftPaddingPoints(43)
         passwordField.delegate = self
+        passwordField.setLeftPaddingPoints(43)
         passwordField.rightView = fieldEyeButton
         passwordField.clearButtonMode = .never
         passwordField.rightViewMode = .always
         passwordField.rightView?.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
-    private func configureButtonsMethods() {
-        loginButton.addTarget(self, action: #selector(loginButtonTaped), for: .touchUpInside)
-        forgotPasswordButton.addTarget(self, action: #selector(forgotPasswordButtonTaped), for: .touchUpInside)
+    private func configureButtons() {
+        singInButton.addTarget(self, action: #selector(singInButtonTaped), for: .touchUpInside)
+        singUpButton.addTarget(self, action: #selector(singUpButtonTaped), for: .touchUpInside)
         facebookButton.addTarget(self, action: #selector(facebookButtonTaped), for: .touchUpInside)
         googleButton.addTarget(self, action: #selector(googleButtonTaped), for: .touchUpInside)
-        singUpButton.addTarget(self, action: #selector(singUpButtonTaped), for: .touchUpInside)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            loginLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 163),
-            loginLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31.5),
-            
-            fieldsStack.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 102),
+            mainLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 163),
+            mainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31.5),
+
+            fieldsStack.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 58),
             fieldsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31.5),
             fieldsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -31.5),
             
-            buttonsStack.topAnchor.constraint(equalTo: fieldsStack.bottomAnchor, constant: 80),
-            buttonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31.5),
-            buttonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -31.5),
+            singUpButton.topAnchor.constraint(equalTo: fieldsStack.bottomAnchor, constant: 58),
+            singUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31.5),
+            singUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -31.5),
             
-            socialButtonsStack.topAnchor.constraint(equalTo: buttonsStack.bottomAnchor, constant: 30),
+            socialButtonsStack.topAnchor.constraint(equalTo: singUpButton.bottomAnchor, constant: 38),
             socialButtonsStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            bottomStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            bottomStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -65),
             bottomStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
 }
 
-// MARK: - TextField Delegate
+// MARK: - UITextField Delegate Methods
 
-extension LogiinViewController: UITextFieldDelegate {
+extension CreateAccountViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.text != "" {
             textField.resignFirstResponder()
